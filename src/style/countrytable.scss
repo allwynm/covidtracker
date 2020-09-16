@@ -1,0 +1,25 @@
+@import '../style/variables';
+
+.countrytable {
+  color: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  overflow-y: scroll;
+  margin: 10px 0;
+
+  &__row {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__row:nth-of-type(odd) {
+    background-color: rgba(139, 0, 0, 0.425);
+  }
+
+  &__flag {
+    width: 15px;
+    object-fit: contain;
+  }
+}

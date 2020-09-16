@@ -7,25 +7,28 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import './App.scss';
+import CountryTable from './component/CountryTable';
 import InfoBox from './component/InfoBox';
+import LineGraph from './component/LineGraph';
+import Map from './component/Map';
+import { sortData } from './function/utility';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('Worldwide');
   const [selectedCountryData, setSelectedCountryData] = useState({});
+  const [mapCenter, setMapCenter] = useState({
+    lat: 20.59746,
+    lng: 78.4796,
+  });
+  const [mapZoom, setMapZoom] = useState(3);
 
   useEffect(() => {
     const getCountryData = async () => {
       await fetch('https://disease.sh/v3/covid-19/countries')
         .then((response) => response.json())
         .then((data) => {
-          // const countries = data.map((country) => {
-          //   const data = {
-          //     country: country.country,
-          //     countryISO2: country.countryInfo.iso2,
-          //   };
-          //   return data;
-          // });
           setCountries(data);
         });
     };
@@ -45,8 +48,11 @@ function App() {
 
     fetch(`https://disease.sh/v3/covid-19/countries/${countryName}`)
       .then((response) => response.json())
-      .then((data) => setSelectedCountryData(data));
-
+      .then((data) => {
+        setSelectedCountryData(data);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
+      });
     setSelectedCountry(countryName);
   };
 
@@ -61,6 +67,7 @@ function App() {
               variant='outlined'
               value={selectedCountry}
               onChange={onChangeCountry}
+              className='app__dropdown'
             >
               <MenuItem value='Worldwide'>Worldwide</MenuItem>
               {countries.map((data) => {
@@ -90,12 +97,21 @@ function App() {
             total={selectedCountryData.deaths}
           />
         </div>
-        <div className='app__map'>I m a map</div>
+        <div className='app__map'>
+          <Map
+            zoom={mapZoom}
+            center={mapCenter}
+            countries={countries}
+            caseType='cases'
+          />
+        </div>
       </div>
       <Card className='app__right'>
         <CardContent className='app__rightbody'>
-          <h3>Cases By Country</h3>
-          <h3>Worldwide new cases</h3>
+          <h4>Cases By Country</h4>
+          <CountryTable countries={sortData(countries)} />
+          <h4>Worldwide new cases</h4>
+          <LineGraph />
         </CardContent>
       </Card>
     </div>
