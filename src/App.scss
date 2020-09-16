@@ -1,0 +1,37 @@
+@import './style/variables';
+
+.app {
+  //   background-color: #0f0c08;
+  //   color: white;
+  //   width: 100vw;
+  //   height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 20px;
+  &__left {
+    flex: 0.9;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__infoitems {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+  }
+
+  &__right {
+  }
+  &__rightbody {
+    background-color: $bg-color;
+    height: 100%;
+  }
+  @media (min-width: 1000px) {
+    flex-direction: row;
+  }
+}
