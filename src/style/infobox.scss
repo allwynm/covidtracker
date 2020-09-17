@@ -1,6 +1,48 @@
 @import '../style/variables';
 
-.info {
-  background-color: $bg-color;
+.infobox {
+  background-color: $bg-color !important;
   color: white;
+  flex: 1;
+  cursor: pointer;
+
+  &--danger {
+    border-top: 10px;
+    border-color: red;
+  }
+
+  &--active {
+    border-top: 10px solid red !important;
+  }
+
+  &--activegreen {
+    border-top: 10px solid lime !important;
+  }
+
+  &--greentext {
+    color: lime !important;
+  }
+
+  &__title {
+    font-size: 1rem !important;
+    color: darken($contrast-color, 100%);
+  }
+
+  &__cases {
+    color: #cc1034;
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__total {
+    color: $contrast-color;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    margin-top: 15px !important ;
+  }
+}
+
+.infobox:not(:last-child) {
+  margin-right: 15px;
 }

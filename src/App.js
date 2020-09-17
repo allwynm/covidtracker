@@ -11,7 +11,7 @@ import CountryTable from './component/CountryTable';
 import InfoBox from './component/InfoBox';
 import LineGraph from './component/LineGraph';
 import Map from './component/Map';
-import { sortData } from './function/utility';
+import { formatNumber, sortData } from './function/utility';
 import 'leaflet/dist/leaflet.css';
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
     lng: 78.4796,
   });
   const [mapZoom, setMapZoom] = useState(3);
+  const [caseType, setCaseType] = useState('deaths');
 
   useEffect(() => {
     const getCountryData = async () => {
@@ -61,7 +62,7 @@ function App() {
     <div className='app'>
       <div className='app__left'>
         <div className='app__header'>
-          <h2>Covid 19 Tracker</h2>
+          <h1>Covid 19 Tracker</h1>
           <FormControl>
             <Select
               variant='outlined'
@@ -82,19 +83,31 @@ function App() {
         </div>
         <div className='app__infoitems'>
           <InfoBox
+            isRed
+            active={caseType === 'cases'}
+            caseType={caseType}
             title='Coranavirus Cases'
-            cases={selectedCountryData.todayCases}
-            total={selectedCountryData.cases}
+            onClick={() => setCaseType('cases')}
+            cases={formatNumber(selectedCountryData.todayCases)}
+            total={formatNumber(selectedCountryData.cases)}
           />
           <InfoBox
+            isRed={false}
+            active={caseType === 'recovered'}
+            caseType={caseType}
+            onClick={(e) => setCaseType('recovered')}
             title='Recovered Cases'
-            cases={selectedCountryData.todayRecovered}
-            total={selectedCountryData.recovered}
+            cases={formatNumber(selectedCountryData.todayRecovered)}
+            total={formatNumber(selectedCountryData.recovered)}
           />
           <InfoBox
+            isRed
+            active={caseType === 'deaths'}
+            caseType={caseType}
+            onClick={(e) => setCaseType('deaths')}
             title='Deaths'
-            cases={selectedCountryData.todayDeaths}
-            total={selectedCountryData.deaths}
+            cases={formatNumber(selectedCountryData.todayDeaths)}
+            total={formatNumber(selectedCountryData.deaths)}
           />
         </div>
         <div className='app__map'>
@@ -102,7 +115,7 @@ function App() {
             zoom={mapZoom}
             center={mapCenter}
             countries={countries}
-            caseType='cases'
+            caseType={caseType}
           />
         </div>
       </div>
@@ -110,8 +123,8 @@ function App() {
         <CardContent className='app__rightbody'>
           <h4>Cases By Country</h4>
           <CountryTable countries={sortData(countries)} />
-          <h4>Worldwide new cases</h4>
-          <LineGraph />
+          <h4>Worldwide new {caseType}</h4>
+          <LineGraph caseType={caseType} />
         </CardContent>
       </Card>
     </div>

@@ -15,7 +15,7 @@
   }
 
   &__row:nth-of-type(odd) {
-    background-color: rgba(139, 0, 0, 0.425);
+    background-color: $contrast-color;
   }
 
   &__flag {

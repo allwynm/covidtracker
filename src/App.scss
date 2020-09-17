@@ -1,7 +1,7 @@
 @import './style/variables';
 
 .app {
-  background-color: #0f0c08;
+  background-color: $primary-color;
   color: white;
   //   width: 100vw;
   //height: 100vh;
@@ -11,12 +11,14 @@
   justify-content: space-evenly;
   padding: 20px;
   &__left {
-    flex: 0.9;
+    flex: 0.8;
+    margin: 0 12px;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
   }
 
   &__dropdown {
@@ -27,10 +29,10 @@
   &__infoitems {
     display: flex;
     justify-content: space-between;
-    margin: 10px;
   }
 
   &__right {
+    flex: 0.4;
   }
   &__rightbody {
     background-color: $bg-color;

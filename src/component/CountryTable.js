@@ -1,5 +1,8 @@
 import React from 'react';
+import numeral from 'numeral';
+
 import '../style/countrytable.scss';
+
 function CountryTable({ countries }) {
   console.log('tables', countries);
   return (
@@ -15,7 +18,9 @@ function CountryTable({ countries }) {
               />{' '}
               {data.country}
             </td>
-            <td className='countrytable__cases'>{data.cases}</td>
+            <td className='countrytable__cases'>
+              <strong>{numeral(data.cases).format('0,0')}</strong>
+            </td>
           </tr>
         ))}
       </tbody>
