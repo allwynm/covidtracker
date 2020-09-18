@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import numeral from 'numeral';
+import '../style/linegraph.scss';
 
 const options = {
   legend: {
@@ -64,7 +65,6 @@ function LineGraph({ caseType }) {
   }, [caseType]);
 
   const buildChartData = (data, caseType) => {
-    debugger;
     const chartData = [];
     let lastDataPoint;
     for (let date in data[caseType]) {
@@ -79,7 +79,6 @@ function LineGraph({ caseType }) {
     }
     return chartData;
   };
-  console.log('data', caseType, data);
   return (
     <div className='linegraph'>
       {data?.length > 0 && (
@@ -88,8 +87,8 @@ function LineGraph({ caseType }) {
           data={{
             datasets: [
               {
-                backgroundColor: 'rgba(204, 16, 52, 0.5)',
-                borderColor: '#CCC934',
+                backgroundColor: 'rgba(139, 0, 0, 0.425)',
+                borderColor: 'rgba(139, 0, 0, 0.425)',
                 data: data,
               },
             ],

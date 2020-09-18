@@ -11,7 +11,7 @@ function Map({ countries, caseType, center, zoom }) {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        {showDataOnMap(countries, caseType)}
+        {countries.length > 0 && showDataOnMap(countries, caseType)}
       </LeafletMap>
     </div>
   );

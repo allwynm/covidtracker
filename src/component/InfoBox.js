@@ -2,8 +2,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import React from 'react';
 import '../style/infobox.scss';
 
-function InfoBox({ isRed, caseType, active, onClick, title, cases, total }) {
-  console.log('infobox', isRed, caseType, active, onClick, title, cases, total);
+function InfoBox({ isRed, active, onClick, title, cases, total }) {
   return (
     <Card
       className={`infobox ${isRed && 'infobox--danger'} ${

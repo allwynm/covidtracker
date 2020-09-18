@@ -4,9 +4,8 @@ import numeral from 'numeral';
 import '../style/countrytable.scss';
 
 function CountryTable({ countries }) {
-  console.log('tables', countries);
   return (
-    <div className='countrytable'>
+    <table className='countrytable'>
       <tbody>
         {countries.map((data) => (
           <tr className='countrytable__row' key={data.country}>
@@ -24,7 +23,7 @@ function CountryTable({ countries }) {
           </tr>
         ))}
       </tbody>
-    </div>
+    </table>
   );
 }
 

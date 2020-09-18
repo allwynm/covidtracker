@@ -23,7 +23,7 @@ function App() {
     lng: 78.4796,
   });
   const [mapZoom, setMapZoom] = useState(3);
-  const [caseType, setCaseType] = useState('deaths');
+  const [caseType, setCaseType] = useState('cases');
 
   useEffect(() => {
     const getCountryData = async () => {
@@ -46,18 +46,20 @@ function App() {
 
   const onChangeCountry = (e) => {
     const countryName = e.target.value;
-
-    fetch(`https://disease.sh/v3/covid-19/countries/${countryName}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setSelectedCountryData(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
-      });
+    if (countryName === 'Worldwide') {
+      setMapCenter([20.59746, 78.4796]);
+    } else {
+      fetch(`https://disease.sh/v3/covid-19/countries/${countryName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setSelectedCountryData(data);
+          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        });
+    }
+    setMapZoom(4);
     setSelectedCountry(countryName);
   };
 
-  console.log(selectedCountryData);
   return (
     <div className='app'>
       <div className='app__left'>
@@ -85,7 +87,6 @@ function App() {
           <InfoBox
             isRed
             active={caseType === 'cases'}
-            caseType={caseType}
             title='Coranavirus Cases'
             onClick={() => setCaseType('cases')}
             cases={formatNumber(selectedCountryData.todayCases)}
@@ -94,7 +95,6 @@ function App() {
           <InfoBox
             isRed={false}
             active={caseType === 'recovered'}
-            caseType={caseType}
             onClick={(e) => setCaseType('recovered')}
             title='Recovered Cases'
             cases={formatNumber(selectedCountryData.todayRecovered)}
@@ -103,7 +103,6 @@ function App() {
           <InfoBox
             isRed
             active={caseType === 'deaths'}
-            caseType={caseType}
             onClick={(e) => setCaseType('deaths')}
             title='Deaths'
             cases={formatNumber(selectedCountryData.todayDeaths)}
